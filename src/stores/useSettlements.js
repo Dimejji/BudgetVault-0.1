@@ -2,53 +2,7 @@ import { ref, computed } from 'vue'
 
 // Module-level state so every component that calls useSettlements()
 // shares the same list (acts like a tiny store without pulling in Pinia).
-const settlements = ref([
-  {
-    id: 1,
-    description: 'Office supplies',
-    person: 'John',
-    amount: 85000,
-    direction: 'business_owes',
-    status: 'pending',
-    date: '28 Aug 2026',
-  },
-  {
-    id: 2,
-    description: 'Client lunch',
-    person: 'Aisha',
-    amount: 42000,
-    direction: 'business_owes',
-    status: 'pending',
-    date: '26 Aug 2026',
-  },
-  {
-    id: 3,
-    description: 'Advance repayment',
-    person: 'Chinedu',
-    amount: 50000,
-    direction: 'person_owes',
-    status: 'pending',
-    date: '20 Aug 2026',
-  },
-  {
-    id: 4,
-    description: 'Printer ink & paper',
-    person: 'Fatima',
-    amount: 28500,
-    direction: 'business_owes',
-    status: 'completed',
-    date: '12 Aug 2026',
-  },
-  {
-    id: 5,
-    description: 'Taxi for airport run',
-    person: 'Tunde',
-    amount: 18500,
-    direction: 'business_owes',
-    status: 'completed',
-    date: '05 Aug 2026',
-  },
-])
+const settlements = ref([])
 
 // Whether the "New Settlement" modal is open. Lives here (rather than in
 // a component) so the header button in the parent and the modal inside

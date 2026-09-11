@@ -2,11 +2,19 @@
   <header class="w-full bg-[#f7f5f0] border-b border-gray-100 px-6 py-4 flex items-center">
     <img src="@/assets/budgetlogo.png" alt="BudgetVault Logo" class="h-20 w-auto object-contain" />
     <div class="flex flex-col -ml-1">
-      <p class="font-extrabold leading-none tracking-[-1.5px]">
-        <span class="block text-[32px] text-[#074033]"> Budget </span>
+      <div class="flex items-center gap-2.5">
+        <div class="flex items-baseline font-extrabold leading-none tracking-[-1.8px]">
+          <span class="text-[30px] text-[#074033]"> Budget </span>
 
-        <span class="block -mt-1 text-[29px] text-[#D4A72C]"> Vault </span>
-      </p>
+          <span class="text-[29px] text-[#D4A72C]"> Vault </span>
+        </div>
+
+        <span
+          class="border-l-2 border-[#D4A72C] pl-2 text-[9px] font-bold uppercase tracking-[1.8px] text-[#074033]"
+        >
+          Business
+        </span>
+      </div>
 
       <span class="mt-1 h-[3px] w-[38px] rounded-full bg-[#D4A72C]"></span>
     </div>

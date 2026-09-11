@@ -1,12 +1,26 @@
 <script setup>
-import MainLayout from '@/layouts/MainLayout.vue'   // adjust path if needed
+import { computed } from 'vue'
+import MainLayout from '@/layouts/MainLayout.vue'
 import { useAppStore } from '@/stores/app'
+import { useExpenseTracking } from '@/stores/useExpenseTracking.js'
 import PageHeader from '@/components/PageHeader.vue'
 import StatCard from '@/components/StatCard.vue'
 import BasePanel from '@/components/BasePanel.vue'
 import ProgressTrack from '@/components/ProgressTrack.vue'
+import { formatNaira } from '@/stores/currency.js'
+
 
 const app = useAppStore()
+
+const {
+  transactions,
+  totalExpenses,
+  transactionCount,
+  largestCategory,
+  categoryPulse,
+  recentTransactions,
+  openModal
+} = useExpenseTracking()
 </script>
 
 <template>
@@ -39,17 +53,17 @@ const app = useAppStore()
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3.5">
         <StatCard
           label="Spent this month"
-          value="₦132,400"
+          :value="formatNaira(totalExpenses)"
           valueClass="text-bvorange"
-          meta="31% of income"
+          meta="This month"
         />
-        <StatCard label="Transactions" value="48" meta="This month" />
-        <StatCard label="Largest category" value="Food" meta="₦42,800" />
+
+        <StatCard label="Transactions" :value="transactionCount" meta="This month" />
+
         <StatCard
-          label="Compared to plan"
-          value="−₦8,600"
-          valueClass="text-[#168064]"
-          meta="Under budget"
+          label="Largest category"
+          :value="largestCategory.name"
+          :meta="formatNaira(largestCategory.amount)"
         />
       </div>
 
@@ -57,36 +71,28 @@ const app = useAppStore()
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
         <!-- Recent transactions -->
         <BasePanel title="Recent transactions" meta="48 total">
-          <div class="flex justify-between items-center py-3 border-b border-[#eff0ed]">
+          <div
+            v-for="transaction in recentTransactions"
+            :key="transaction.id"
+            class="flex justify-between items-center py-3 border-b border-[#eff0ed]"
+          >
             <div>
-              <div class="text-[12.5px] font-extrabold">Shoprite</div>
-              <div class="text-[10.5px] text-bvmuted mt-0.5">Food · Today, 6:14 PM</div>
-            </div>
-            <b class="text-[13px] text-[#bd5d18]">−₦18,400</b>
-          </div>
+              <div class="text-[12.5px] font-extrabold">
+                {{ transaction.description }}
+              </div>
 
-          <div class="flex justify-between items-center py-3 border-b border-[#eff0ed]">
-            <div>
-              <div class="text-[12.5px] font-extrabold">Uber</div>
-              <div class="text-[10.5px] text-bvmuted mt-0.5">Transport · Today, 3:02 PM</div>
+              <div class="text-[10.5px] text-bvmuted mt-0.5">
+                {{ transaction.category }}
+              </div>
             </div>
-            <b class="text-[13px] text-[#bd5d18]">−₦4,800</b>
-          </div>
 
-          <div class="flex justify-between items-center py-3 border-b border-[#eff0ed]">
-            <div>
-              <div class="text-[12.5px] font-extrabold">Netflix</div>
-              <div class="text-[10.5px] text-bvmuted mt-0.5">Subscriptions · Yesterday</div>
-            </div>
-            <b class="text-[13px] text-[#bd5d18]">−₦5,000</b>
-          </div>
-
-          <div class="flex justify-between items-center py-3">
-            <div>
-              <div class="text-[12.5px] font-extrabold">Salary</div>
-              <div class="text-[10.5px] text-bvmuted mt-0.5">Income · Yesterday</div>
-            </div>
-            <b class="text-[13px] text-[#188064]">+₦420,000</b>
+            <b
+              class="text-[13px]"
+              :class="transaction.type === 'income' ? 'text-[#188064]' : 'text-[#bd5d18]'"
+            >
+              {{ transaction.type === 'income' ? '+' : '−' }}
+              {{ formatNaira(transaction.amount) }}
+            </b>
           </div>
         </BasePanel>
 

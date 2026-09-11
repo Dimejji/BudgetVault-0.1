@@ -40,15 +40,15 @@ function openClaimForm() {
 
 // ---------- Overview Spending ----------
 const augustSpending = ref([
-  { name: 'Payroll', amount: 3800000 },
-  { name: 'Operations', amount: 1200000 },
-  { name: 'Marketing', amount: 800000 },
-  { name: 'Utilities', amount: 420000 },
-  { name: 'Transportation', amount: 300000 },
-  { name: 'Other', amount: 180000 },
+  { name: 'Payroll', amount: 0 },
+  { name: 'Operations', amount: 0 },
+  { name: 'Marketing', amount: 0 },
+  { name: 'Utilities', amount: 0},
+  { name: 'Transportation', amount: 0},
+  { name: 'Other', amount: 0 },
 ])
 
-const julyTotal = 5800000
+const julyTotal = 0
 
 const augustTotal = computed(() =>
   augustSpending.value.reduce((total, item) => total + item.amount, 0)
@@ -59,7 +59,7 @@ const spendingChange = computed(() => {
   return ((augustTotal.value - julyTotal) / julyTotal) * 100
 })
 
-const reportNet = 2600000
+const reportNet = 0
 </script>
 
 <template>
